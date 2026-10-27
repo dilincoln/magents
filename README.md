@@ -13,9 +13,9 @@ it alive, a **TUI** that shows all of them in one window and lets you type strai
 into any of them, and a **CLI** that does everything the TUI does from a shell.
 Quit the TUI and nothing stops; open it again and every session is where you left it.
 
-https://github.com/user-attachments/assets/b784ffd9-0aad-493c-a3c9-038d7333f879
+[![Watch the magents video on YouTube](https://img.youtube.com/vi/oZMpcFMCuh8/maxresdefault.jpg)](https://youtu.be/oZMpcFMCuh8)
 
-<sub>Every terminal in the video is the real TUI, recorded from this repository —
+<sub>▶ [Watch on YouTube](https://youtu.be/oZMpcFMCuh8) · every terminal in the video is the real TUI, recorded from this repository —
 see [`video/`](video/README.md).</sub>
 
 ```

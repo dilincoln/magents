@@ -1,0 +1,34 @@
+<template>
+	<!-- bars 62–68: narrowing the roster as you type -->
+	<div data-hf-id="hf-54jm" data-composition-id="search" data-width="1920" data-height="1080" data-duration="10.909">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-5mat" id="h-search" class="host clip" data-composition-id="h-search" data-no-timeline
+					data-start="0" data-duration="10.909" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-rmy7" id="h-lens-search" class="host clip" data-composition-id="h-lens-search" data-no-timeline
+				data-start="0" data-duration="10.909" data-playback-start="0.908"></div></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-4a0u" class="kicker">08 · Search</div>
+			<h2 data-hf-id="hf-ehh4">Find anything.</h2>
+			<p data-hf-id="hf-5fow">Narrow the roster by name, project, provider or model.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-pmwp">/</kbd><span data-hf-id="hf-fnfh">search</span></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.feature("search", Film.bar(62), { take: "search" });
+				Film.screen(s, "h-lens-search", "search");
+				Film.lens(s, { x: 0, y: 110, w: 360, h: 380 }, 1.5, [1300, 250], [s.bar(62) + 0.6, s.bar(68)]);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+source "$(dirname "$0")/env.sh"
+cd "$REPO_DIR"
+exec bun run daemon/index.ts

@@ -1,0 +1,35 @@
+<template>
+	<!-- bars 14–20: the window arrives, and the roster -->
+	<div data-hf-id="hf-q4zx" data-composition-id="roster" data-width="1920" data-height="1080" data-duration="11.308">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-o1bj" id="h-roster" class="host clip" data-composition-id="h-roster" data-no-timeline
+					data-start="0" data-duration="11.308" data-playback-start="0.508"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-y8do" class="kicker">01 · Roster</div>
+			<h2 data-hf-id="hf-wcq6">One roster.<br data-hf-id="hf-x5px" />Every agent.</h2>
+			<p data-hf-id="hf-wvl0">Claude Code and Codex sessions from every repository, side by side — each agent's live screen right next to the list.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-mhaf">↑</kbd><kbd data-hf-id="hf-lood">↓</kbd><span data-hf-id="hf-m3xy">move through it</span></div>
+		</div>
+		<script>
+			(function () {
+				const { SPLIT } = Film;
+				// the window lands a little before bar 14, so it is in place on it
+				const s = Film.feature("roster", Film.bar(14) - 0.4, { take: "overview", cut: false, captionFrom: 0.4 });
+				const { tl } = s;
+				const win = s.q(".window.main");
+				tl.fromTo(win, { x: 540, y: 520, scale: 0.7, opacity: 0 }, { ...SPLIT, opacity: 1, duration: 0.8, ease: "expo.out" }, 0);
+				// a slow push-in through the scene, back on the split by its end
+				const back = s.bar(20) - 0.5;
+				tl.to(win, { x: 500, y: 130, scale: 0.8, duration: back - s.bar(14), ease: "sine.inOut" }, s.bar(14));
+				tl.to(win, { ...SPLIT, duration: 0.5, ease: "power3.inOut" }, back);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

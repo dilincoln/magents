@@ -1,0 +1,3 @@
+#!/bin/sh
+# tmux, pointed at the capture server that `ns` started
+exec tmux -S /tmp/mgv-scratch/tmux.sock "$@"

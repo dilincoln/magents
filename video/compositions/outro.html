@@ -1,0 +1,32 @@
+<template>
+	<!-- bar 80, the track's last hit: the logo -->
+	<div data-hf-id="hf-9pte" data-composition-id="outro" data-width="1920" data-height="1080" data-duration="4.15">
+		<div data-hf-id="hf-c6us" id="mark2" class="mark" data-composition-id="mark2" data-no-timeline
+			data-start="0" data-duration="4.15"><div data-hf-id="hf-c4bx" class="glyphs"></div></div>
+		<div data-hf-id="hf-7zc1" class="tagline">One terminal for all your coding agents.</div>
+		<div data-hf-id="hf-a5w2" class="install"><span data-hf-id="hf-my1r">$</span> ./install.sh</div>
+		<div data-hf-id="hf-zctd" class="small">Linux · Bun · Claude Code · Codex</div>
+		<script>
+			(function () {
+				const { BAR, END } = Film;
+				const s = Film.scene("outro", 147.1);
+				const { tl } = s;
+				const mark = s.q("#mark2");
+
+				// the sweep is phased from the downbeat the logo lands on, so the
+				// light enters on each bar
+				const glyphs = Wordmark(mark.querySelector(".glyphs"), { cycle: BAR, lift: 0.7 });
+				Film.source(s, mark, (t) => glyphs.paint(s.start + t - Film.bar(80) + 0.12 * BAR));
+
+				tl.set(mark, { xPercent: -50, yPercent: -50, y: -150 }, 0);
+				tl.fromTo(mark, { scale: 1.6, opacity: 0, filter: "blur(16px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out" }, s.bar(80));
+				tl.fromTo(s.q(".tagline"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, s.beat(322));
+				tl.fromTo(s.q(".install"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, s.beat(324));
+				tl.fromTo(s.q(".small"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, s.beat(326));
+				// everything fades out together by the end of the film
+				tl.to([mark, ...s.qa(".tagline, .install, .small")], { opacity: 0, duration: 0.8, ease: "power2.in" }, END - 0.8 - s.start);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# sheet <take> <t1,t2,…> <out.png> — a contact sheet of a take's frames
+here="$(cd "$(dirname "$0")" && pwd)"
+CHROME=/home/diego/.cache/hyperframes/chrome/chrome-headless-shell/linux-152.0.7977.30/chrome-headless-shell-linux64/chrome-headless-shell
+# the page lives outside the project, so the editor never mistakes it for a
+# composition; its <base> points back here for the renderer and the takes
+mkdir -p /tmp/mgv-review
+sed "s#@CAPTURE@#file://$here#" "$here/sheet.html.in" > /tmp/mgv-review/sheet.html
+n=$(echo "$2" | tr ',' '\n' | wc -l)
+height=$(( (n + 1) / 2 * 495 ))
+exec "$CHROME" --headless --disable-gpu --allow-file-access-from-files --hide-scrollbars \
+	--window-size=1680,"$height" --virtual-time-budget=3000 --screenshot="$3" \
+	"file:///tmp/mgv-review/sheet.html?take=$1&ts=$2" 2>/dev/null

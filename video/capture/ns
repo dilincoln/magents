@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Starts the capture tmux server inside a private user + mount namespace in
+# which /tmp/mgv-scratch/fakehome appears as /home/demo. The real /home is
+# covered by a tmpfs for these processes only; nothing outside sees a change.
+#
+# Windows: `daemon` (magents-daemon), `tui` (an interactive shell the takes
+# start `magents` in) and `shell` (for setup commands), all 140×38.
+# Drive it from outside with:  tmux -S /tmp/mgv-scratch/tmux.sock …
+set -euo pipefail
+here="$(cd "$(dirname "$0")" && pwd)"
+exec unshare -r -m --propagation private bash -c "
+	mount -t tmpfs tmpfs /home
+	mkdir -p /home/demo
+	mount --bind /tmp/mgv-scratch/fakehome /home/demo
+	tmux -S /tmp/mgv-scratch/tmux.sock -f '$here/tmux.conf' new-session -d -s main -n daemon -x 140 -y 38 '$here/daemon'
+	sleep 2
+	tmux -S /tmp/mgv-scratch/tmux.sock new-window -d -t main -n tui 'bash --rcfile $here/bashrc -i'
+	tmux -S /tmp/mgv-scratch/tmux.sock new-window -d -t main -n shell 'bash --rcfile $here/bashrc -i'
+"

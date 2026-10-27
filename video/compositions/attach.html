@@ -1,0 +1,37 @@
+<template>
+	<!-- bars 20–28: attach, type into the agent, detach -->
+	<div data-hf-id="hf-d12x" data-composition-id="attach" data-width="1920" data-height="1080" data-duration="14.545">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-74qp" id="h-attach" class="host clip" data-composition-id="h-attach" data-no-timeline
+					data-start="0" data-duration="14.545" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- the same take, drawn again larger, on the same clock -->
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-fta9" id="h-lens-attach" class="host clip" data-composition-id="h-lens-attach" data-no-timeline
+				data-start="0" data-duration="14.545" data-playback-start="0.908"></div></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-4qjd" class="kicker">02 · Attach</div>
+			<h2 data-hf-id="hf-t3uu">Type straight into it.</h2>
+			<p data-hf-id="hf-zxnz">The pane <em data-hf-id="hf-fnwr">is</em> the agent's own terminal. Every key goes to Claude or Codex, exactly as if you'd started it yourself.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-m2ze">→</kbd><span data-hf-id="hf-kqio">attach</span><kbd data-hf-id="hf-vbuw">⌃⌥←</kbd><span data-hf-id="hf-2m6u">detach</span></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.feature("attach", Film.bar(20), { take: "attach" });
+				Film.screen(s, "h-lens-attach", "attach");
+				// the footer that says the keys now go to the agent
+				const attached = Film.onScreen(s, "h-lens-attach", "every other key goes to the agent");
+				Film.lens(s, { x: 360, y: 560, w: 1320, h: 390 }, 1.0, [560, 660], attached);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

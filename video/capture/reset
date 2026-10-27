@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Tears the mock world down and builds it again from nothing: stops the
+# capture tmux server (and with it the daemon and every fake agent), deletes
+# /tmp/mgv-scratch, recreates it, and fills the roster.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+tmux -S /tmp/mgv-scratch/tmux.sock kill-server 2>/dev/null || true
+sleep 1
+rm -rf /tmp/mgv-scratch
+
+./setup-mock.sh
+mkdir -p /tmp/mgv-scratch/bin
+cp /home/diego/.bun/bin/bun /tmp/mgv-scratch/bin/bun
+
+./ns
+sleep 3
+./inns ./populate.sh

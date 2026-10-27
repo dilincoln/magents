@@ -1,0 +1,30 @@
+<template>
+	<!-- bar 12, the drop: the wordmark, its light crossing once a bar -->
+	<div data-hf-id="hf-1ygp" data-composition-id="drop" data-width="1920" data-height="1080" data-duration="4.3">
+		<div data-hf-id="hf-rbm5" id="mark1" class="mark" data-composition-id="mark1" data-no-timeline
+			data-start="0" data-duration="4.3"><div data-hf-id="hf-c4bx" class="glyphs"></div></div>
+		<div data-hf-id="hf-5ex8" id="tagline1" class="tagline">One terminal for all your coding agents.</div>
+		<script>
+			(function () {
+				const { P, BAR } = Film;
+				const s = Film.scene("drop", 23.5);
+				const { tl } = s;
+				const mark = s.q("#mark1");
+				const tagline = s.q("#tagline1");
+
+				// the host hands over seconds since its own start; the sweep is phased
+				// from the downbeat the logo lands on, so the light enters on each bar
+				const glyphs = Wordmark(mark.querySelector(".glyphs"), { cycle: BAR, lift: 0.7 });
+				Film.source(s, mark, (t) => glyphs.paint(s.start + t - Film.bar(12) + 0.12 * BAR));
+
+				tl.set(mark, { xPercent: -50, yPercent: -50, y: -60 }, 0);
+				tl.fromTo(mark, { scale: 1.9, opacity: 0, filter: "blur(18px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, s.bar(12));
+				Film.splitWords(tagline);
+				tl.fromTo(tagline.querySelectorAll(".w"), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.4, stagger: P / 4, ease: "power3.out" }, s.bar(13));
+				tl.to([mark, tagline], { y: "-=140", opacity: 0, duration: 0.5, ease: "power3.in" }, s.bar(14) - 0.55);
+
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

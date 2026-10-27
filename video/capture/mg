@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# magents CLI inside the mock world: `./mg sessions`, `./mg new …`
+source "$(dirname "$0")/env.sh"
+exec bun run "$MAGENTS_CLI" "$@"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Runs a command inside the capture namespace (where /home/demo exists), by
+# joining the namespaces of the tmux server that `ns` started:
+#
+#   ./inns ./mg sessions
+pid=$(tmux -S /tmp/mgv-scratch/tmux.sock display -p '#{pid}')
+exec nsenter -t "$pid" -U -m --preserve-credentials --wdns="$PWD" -- "$@"

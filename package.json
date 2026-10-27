@@ -1,0 +1,38 @@
+{
+	"name": "magents",
+	"version": "0.0.1",
+	"type": "module",
+	"private": true,
+	"description": "Provider-agnostic control plane for coding agents",
+	"bin": {
+		"magents": "./cli/index.ts"
+	},
+	"scripts": {
+		"start": "bun run src/index.tsx",
+		"cli": "bun run cli/index.ts",
+		"dev": "bun --watch run src/index.tsx",
+		"lint": "biome check --write",
+		"daemon": "bun run daemon/index.ts",
+		"daemon:dev": "bun run daemon/index.ts",
+		"db:generate": "drizzle-kit generate",
+		"db:studio": "drizzle-kit studio"
+	},
+	"dependencies": {
+		"@anthropic-ai/claude-agent-sdk": "^0.3.247",
+		"@opentui/core": "^0.5.8",
+		"@opentui/react": "^0.5.8",
+		"@tanstack/react-query": "^5.102.6",
+		"drizzle-orm": "^0.45.2",
+		"effect": "^3.22.1",
+		"fraci": "^0.19.0",
+		"react": "^19.2.8",
+		"zustand": "^5.0.15"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.16",
+		"@types/bun": "^1.4.0",
+		"@types/node": "^26.2.0",
+		"@types/react": "^19.2.18",
+		"drizzle-kit": "^0.31.10"
+	}
+}

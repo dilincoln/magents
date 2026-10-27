@@ -1,0 +1,35 @@
+<template>
+	<!-- bars 46–52: quit the TUI, the agents keep working, come back -->
+	<div data-hf-id="hf-v16e" data-composition-id="daemon" data-width="1920" data-height="1080" data-duration="10.909">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-f1u1" id="h-daemon" class="host clip" data-composition-id="h-daemon" data-no-timeline
+					data-start="0" data-duration="10.909" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-9syj" id="h-lens-daemon" class="host clip" data-composition-id="h-lens-daemon" data-no-timeline
+				data-start="0" data-duration="10.909" data-playback-start="0.908"></div></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-dgxo" class="kicker">06 · Daemon</div>
+			<h2 data-hf-id="hf-f9ss">Agents outlive the UI.</h2>
+			<p data-hf-id="hf-kh45">A small background daemon owns every agent's terminal. Quit, close the window, come back an hour later — they kept working.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-pvc7">q</kbd><span data-hf-id="hf-3h42">quit — the agents stay</span></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.feature("daemon", Film.bar(46), { take: "quit" });
+				Film.screen(s, "h-lens-daemon", "quit");
+				// exactly while the plain shell is on screen: its prompt on the top row
+				Film.lens(s, { x: 0, y: 0, w: 640, h: 50 }, 2.1, [560, 470], Film.onScreen(s, "h-lens-daemon", "demo@devbox", 0));
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

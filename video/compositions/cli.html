@@ -1,0 +1,48 @@
+<template>
+	<!-- bars 52–62: the TUI steps back, a shell comes in on the right -->
+	<div data-hf-id="hf-r47j" data-composition-id="cli" data-width="1920" data-height="1080" data-duration="18.18">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-40b6" id="h-cli" class="host clip" data-composition-id="h-cli" data-no-timeline
+					data-start="0" data-duration="18.18" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-ef8l" class="kicker">07 · CLI</div>
+			<h2 data-hf-id="hf-dzkd">Script all of it.</h2>
+			<p data-hf-id="hf-708r">Everything the TUI does, from a shell, with <code data-hf-id="hf-frb8">--json</code>. One session per ticket is a <code data-hf-id="hf-cctf">for</code> loop — and each one shows up in the roster.</p>
+		</div>
+		<!-- the shell, in front of the TUI and of the caption -->
+		<div data-hf-id="hf-zxq9" class="window small">
+			<div data-hf-id="hf-c51b" class="bar"><i data-hf-id="hf-ylp6"></i><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-0zjc"></i><span data-hf-id="hf-icub">bash — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-6g9g" class="body">
+				<div data-hf-id="hf-mnp6" id="h-shell" class="host clip" data-composition-id="h-shell" data-no-timeline
+					data-start="0" data-duration="18.18" data-playback-start="0.908"></div>
+			</div>
+		</div>
+		<script>
+			(function () {
+				const { SPLIT, haloAt } = Film;
+				const s = Film.feature("cli", Film.bar(52), { take: "cli-tui" });
+				const { tl } = s;
+				Film.screen(s, "h-shell", "cli-shell");
+				// the shell covers the TUI's corner on purpose: its rows may sit under it
+				for (const row of s.q("#h-cli").children) row.setAttribute("data-layout-allow-overlap", "");
+				const win = s.q(".window.main");
+				const shell = s.q(".window.small");
+				const TUI = { x: 700, y: 46, scale: 0.62 };
+				const SHELL = { x: 1920 - 60 - 1154 * 0.8, y: 1080 - 48 - 636 * 0.8, scale: 0.8 };
+				tl.to(win, { ...TUI, duration: 0.5, ease: "power3.inOut" }, 0);
+				tl.set(s.q(".halo"), haloAt(TUI), 0);
+				tl.fromTo(shell, { ...SHELL, y: 1120, opacity: 0 }, { y: SHELL.y, opacity: 1, duration: 0.6, ease: "expo.out" }, 0);
+				// both back where they were by the scene's end
+				tl.to(shell, { y: 1120, opacity: 0, duration: 0.4, ease: "power3.in" }, s.bar(62) - 0.4);
+				tl.to(win, { ...SPLIT, duration: 0.5, ease: "power3.inOut" }, s.bar(62) - 0.5);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

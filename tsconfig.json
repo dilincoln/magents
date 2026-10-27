@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"types": ["bun"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@opentui/react",
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"skipLibCheck": true,
+		"noEmit": true
+	},
+	"include": ["src", "cli", "client", "daemon", "drizzle.config.ts"]
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+# the CLI, as the installed `magents-cli` binary would be
+exec bun run "$(dirname "$0")/../../../cli/index.ts" "$@"

@@ -1,0 +1,545 @@
+/* The look of the film around the recorded screens. Colours are the TUI's
+   own (src/lib/theme.ts): bg #0a0c14, panel #0d1020, line #1c2340,
+   accent #22d3ee, violet #a78bfa, text #dbe2f5, muted #6a739b. */
+
+@font-face {
+	font-family: "Inter";
+	src: url("../assets/fonts/inter-latin-wght-normal.woff2") format("woff2");
+	font-weight: 100 900;
+}
+
+:root {
+	--bg: #05060b;
+	--panel: #0d1020;
+	--line: #1c2340;
+	--accent: #22d3ee;
+	--violet: #a78bfa;
+	--text: #dbe2f5;
+	--muted: #6a739b;
+	--display: "Inter", sans-serif;
+	--mono: "Term", monospace;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html,
+body {
+	width: 1920px;
+	height: 1080px;
+	overflow: hidden;
+	background: var(--bg);
+}
+#root {
+	position: relative;
+	width: 1920px;
+	height: 1080px;
+	overflow: hidden;
+	background: var(--bg);
+	font-family: var(--display);
+	color: var(--text);
+}
+
+/* ── backdrop ─────────────────────────────────────────────────────────── */
+#backdrop {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+#backdrop .dots {
+	position: absolute;
+	inset: -60px;
+	background-image: radial-gradient(circle, rgba(120, 140, 220, 0.13) 1.3px, transparent 1.6px);
+	background-size: 32px 32px;
+}
+#backdrop .glow {
+	position: absolute;
+	width: 1100px;
+	height: 1100px;
+	border-radius: 50%;
+	filter: blur(40px);
+	opacity: 0.5;
+}
+#backdrop .g1 {
+	left: -380px;
+	top: -520px;
+	background: radial-gradient(circle, rgba(34, 211, 238, 0.32), transparent 62%);
+}
+#backdrop .g2 {
+	right: -420px;
+	bottom: -560px;
+	background: radial-gradient(circle, rgba(167, 139, 250, 0.3), transparent 62%);
+}
+#backdrop .vignette {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* ── windows ──────────────────────────────────────────────────────────── */
+.window {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1680px;
+	height: 984px;
+	transform-origin: 0 0;
+	border-radius: 14px;
+	overflow: hidden;
+	background: #0a0c14;
+	border: 1px solid #262f55;
+	box-shadow:
+		0 50px 140px rgba(0, 0, 0, 0.7),
+		0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+.window.small {
+	width: 1154px;
+	height: 636px;
+}
+.window .bar {
+	height: 34px;
+	background: #0c0f1c;
+	border-bottom: 1px solid #171d36;
+	display: flex;
+	align-items: center;
+	padding: 0 16px;
+	gap: 9px;
+	position: relative;
+}
+.window .bar i {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #252c4a;
+}
+.window .bar span {
+	position: absolute;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font: 400 14px var(--mono);
+	color: #59628a;
+	letter-spacing: 0.02em;
+}
+.window .body {
+	position: relative;
+	width: 1680px;
+	height: 950px;
+	overflow: hidden;
+	background: #0a0c14;
+}
+.window.small .body {
+	width: 1152px;
+	height: 600px;
+}
+
+/* ── the keyboard & mouse scene ───────────────────────────────────────── */
+#pointer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
+	filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+	opacity: 0;
+}
+#ripple {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 56px;
+	height: 56px;
+	margin: -28px 0 0 -28px;
+	border-radius: 50%;
+	border: 3px solid var(--accent);
+	box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
+	z-index: 4;
+	opacity: 0;
+}
+#keyhud {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1920px;
+	height: 1080px;
+	pointer-events: none;
+}
+#keyhud kbd {
+	position: absolute;
+	left: 1195px;
+	top: 958px;
+	font-size: 34px;
+	padding: 10px 24px;
+	min-width: 76px;
+	border-radius: 12px;
+	border-bottom-width: 5px;
+	box-shadow: 0 0 30px rgba(34, 211, 238, 0.35);
+	opacity: 0;
+}
+.host {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.glint {
+	position: absolute;
+	top: -20%;
+	left: -40%;
+	width: 30%;
+	height: 140%;
+	background: linear-gradient(90deg, transparent, rgba(160, 230, 255, 0.14), transparent);
+	transform: rotate(12deg) translateX(-100%);
+	pointer-events: none;
+	opacity: 0;
+}
+.halo {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1500px;
+	height: 900px;
+	border-radius: 50%;
+	background: radial-gradient(ellipse, rgba(34, 211, 238, 0.22), rgba(167, 139, 250, 0.12) 45%, transparent 70%);
+	filter: blur(30px);
+	opacity: 0;
+}
+
+/* ── lenses: a recorded region, drawn again bigger ─────────────────────── */
+.lens {
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-radius: 18px;
+	overflow: hidden;
+	background: #0a0c14;
+	border: 2px solid rgba(34, 211, 238, 0.7);
+	box-shadow:
+		0 30px 90px rgba(0, 0, 0, 0.75),
+		0 0 40px rgba(34, 211, 238, 0.25);
+	opacity: 0;
+}
+.lens-in {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform-origin: 0 0;
+}
+.rings {
+	position: absolute;
+	inset: 0;
+}
+.ring {
+	position: absolute;
+	border: 2.5px solid var(--accent);
+	border-radius: 8px;
+	box-shadow: 0 0 24px rgba(34, 211, 238, 0.6);
+	opacity: 0;
+}
+.ring b {
+	position: absolute;
+	right: -14px;
+	top: 50%;
+	transform: translate(100%, -50%);
+	font: 700 15px var(--mono);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #031018;
+	background: var(--accent);
+	padding: 5px 10px;
+	border-radius: 6px;
+	white-space: nowrap;
+}
+
+.tag {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font: 700 16px var(--mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #031018;
+	background: var(--accent);
+	padding: 7px 12px;
+	border-radius: 7px;
+	white-space: nowrap;
+	box-shadow: 0 0 24px rgba(34, 211, 238, 0.5);
+	opacity: 0;
+}
+
+/* ── intro ────────────────────────────────────────────────────────────── */
+#intro .intro-line {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 820px;
+	text-align: center;
+	font-size: 64px;
+	font-weight: 700;
+	letter-spacing: -0.025em;
+	color: #eef2ff;
+	opacity: 0;
+}
+#intro .intro-line em {
+	font-style: normal;
+	background: linear-gradient(90deg, var(--accent), var(--violet));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+.mini {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1320px;
+	height: 909px;
+	transform-origin: 50% 50%;
+	border-radius: 18px;
+	overflow: hidden;
+	background: #0a0c14;
+	border: 2px solid #2a3360;
+	box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+	opacity: 0;
+}
+.mini .bar {
+	height: 34px;
+	background: #0c0f1c;
+	border-bottom: 1px solid #171d36;
+	font: 400 17px var(--mono);
+	color: #7c86b3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.mini .crop {
+	position: relative;
+	width: 1320px;
+	height: 875px;
+	overflow: hidden;
+}
+.mini .crop .term {
+	position: absolute;
+	left: -360px;
+	top: -50px;
+}
+/* the ✕ on the window about to be closed */
+.mini .close {
+	position: absolute;
+	right: 26px;
+	top: 0;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	font: 700 26px var(--mono);
+	color: #f87171;
+	opacity: 0;
+}
+/* where it was: an empty frame that says what was lost */
+.ghost {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1320px;
+	height: 909px;
+	transform-origin: 50% 50%;
+	border: 6px dashed rgba(248, 113, 113, 0.6);
+	border-radius: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font: 700 92px var(--display);
+	letter-spacing: -0.02em;
+	color: rgba(248, 113, 113, 0.85);
+	opacity: 0;
+}
+/* "finished or working?" — a question mark on every window */
+.mini .ask {
+	position: absolute;
+	right: 40px;
+	top: 90px;
+	width: 190px;
+	height: 190px;
+	border-radius: 50%;
+	background: #fbbf24;
+	color: #1a1204;
+	font: 800 140px/190px var(--display);
+	text-align: center;
+	box-shadow: 0 0 60px rgba(251, 191, 36, 0.55);
+	opacity: 0;
+}
+
+/* ── wordmark ─────────────────────────────────────────────────────────── */
+.mark {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	opacity: 0;
+	--fs: 20px;
+	--cw: 44px;
+	--lh: 92px;
+}
+.mark .glyphs.term {
+	/* the grid's own cell size, scaled up: these win over .term's defaults */
+	--fs: 20px;
+	--cw: 44px;
+	--lh: 92px;
+	filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.28));
+}
+#drop .tagline,
+#outro .tagline {
+	position: absolute;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 46px;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	color: #e7ecfb;
+}
+#drop .tagline {
+	top: 690px;
+}
+#outro .tagline {
+	top: 640px;
+}
+#outro .tagline,
+#outro .install,
+#outro .small {
+	opacity: 0;
+}
+#outro .install {
+	position: absolute;
+	left: 50%;
+	top: 760px;
+	transform: translateX(-50%);
+	font: 400 30px var(--mono);
+	color: var(--text);
+	background: #0d1020;
+	border: 1px solid #262f55;
+	border-radius: 12px;
+	padding: 16px 30px;
+}
+#outro .install span {
+	color: var(--violet);
+	margin-right: 10px;
+}
+#outro .small {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 880px;
+	text-align: center;
+	font: 400 20px var(--mono);
+	letter-spacing: 0.12em;
+	color: var(--muted);
+}
+
+/* ── captions ─────────────────────────────────────────────────────────── */
+.cap {
+	position: absolute;
+	left: 80px;
+	top: 0;
+	width: 420px;
+	height: 1080px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 26px;
+}
+/* hidden until their own entrance: a caption's lines rise in one after
+   another, and a line still waiting its turn must not be on screen yet */
+.cap > * {
+	opacity: 0;
+}
+.cap .kicker {
+	font: 700 17px var(--mono);
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.cap h2 {
+	font-size: 62px;
+	line-height: 1.04;
+	font-weight: 750;
+	letter-spacing: -0.035em;
+	color: #f1f4ff;
+}
+.cap p {
+	font-size: 23px;
+	line-height: 1.5;
+	color: #8f98c0;
+}
+.cap p em {
+	font-style: normal;
+	color: #e7ecfb;
+}
+.cap code,
+.chip code {
+	font-family: var(--mono);
+	color: var(--accent);
+	font-size: 0.92em;
+}
+.cap .keys {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	font-size: 18px;
+	color: var(--muted);
+}
+.cap .keys span {
+	margin-right: 12px;
+}
+kbd {
+	font: 700 19px var(--mono);
+	color: #e7ecfb;
+	background: #121733;
+	border: 1px solid #2c3666;
+	border-bottom-width: 3px;
+	border-radius: 8px;
+	padding: 5px 11px;
+	min-width: 38px;
+	text-align: center;
+}
+
+/* ── recap ────────────────────────────────────────────────────────────── */
+#recap .chips {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 1640px;
+	transform: translate(-50%, -50%);
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 26px;
+}
+.chip {
+	white-space: nowrap;
+	font-size: 27px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	color: #e7ecfb;
+	background: rgba(13, 16, 32, 0.85);
+	border: 1px solid #262f55;
+	border-radius: 16px;
+	padding: 28px 26px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	opacity: 0;
+}
+.chip b {
+	color: var(--accent);
+	font-size: 22px;
+}
+.chip:nth-child(even) b {
+	color: var(--violet);
+}
+
+#flash {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(ellipse at center, rgba(200, 245, 255, 0.95), rgba(120, 200, 255, 0.5) 50%, rgba(34, 211, 238, 0) 80%);
+	opacity: 0;
+	pointer-events: none;
+}

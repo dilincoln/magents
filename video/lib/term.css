@@ -1,0 +1,139 @@
+/*
+ * A terminal grid drawn from recorded magents screens (see capture/record.ts).
+ *
+ * Cells are exactly --cw × --lh. ASCII text runs straight through the font,
+ * which is monospaced at 0.6em; every other character sits in its own
+ * one-cell box (`i.g`) so a fallback glyph cannot shift the row. Box-drawing
+ * and block characters (`i.x`) are painted here, edge to edge, the way a
+ * terminal's own renderer does it, so borders and the wordmark have no seams.
+ */
+
+@font-face {
+	font-family: "Term";
+	src: url("../assets/fonts/JetBrainsMonoNerdFontMono-Regular.ttf");
+	font-weight: 400;
+}
+@font-face {
+	font-family: "Term";
+	src: url("../assets/fonts/JetBrainsMonoNerdFontMono-Bold.ttf");
+	font-weight: 700;
+}
+@font-face {
+	font-family: "Term";
+	src: url("../assets/fonts/JetBrainsMonoNerdFontMono-Italic.ttf");
+	font-style: italic;
+}
+
+.term {
+	--fs: 20px;
+	--cw: 12px;
+	--lh: 25px;
+	--lw: 2px;
+	--hw: 1px; /* half the line width */
+	position: relative;
+	font-family: "Term", monospace;
+	font-size: var(--fs);
+	line-height: var(--lh);
+	white-space: pre;
+	font-variant-ligatures: none;
+	font-feature-settings: "liga" 0, "calt" 0;
+	background: #0a0c14;
+	color: #dbe2f5;
+	overflow: hidden;
+}
+.term .row {
+	height: var(--lh);
+	display: block;
+}
+.term .row span {
+	display: inline-block;
+	height: var(--lh);
+	vertical-align: top;
+}
+.term i {
+	font-style: normal;
+	display: inline-block;
+	width: var(--cw);
+	height: var(--lh);
+	vertical-align: top;
+	text-align: center;
+	position: relative;
+	overflow: visible;
+}
+.term i.w {
+	width: calc(var(--cw) * 2);
+}
+.term i.x::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	--c: currentColor;
+	--g: linear-gradient(var(--c), var(--c));
+}
+
+/* ── lines ─────────────────────────────────────────────────────────────── */
+/* ─ */ .term i.x[data-c="2500"]::before { background: var(--g) center / calc(100% + 1px) var(--lw) no-repeat; }
+/* ━ */ .term i.x[data-c="2501"]::before { background: var(--g) center / calc(100% + 1px) calc(var(--lw) * 2) no-repeat; }
+/* │ */ .term i.x[data-c="2502"]::before { background: var(--g) center / var(--lw) calc(100% + 1px) no-repeat; }
+/* ┃ */ .term i.x[data-c="2503"]::before { background: var(--g) center / calc(var(--lw) * 2) calc(100% + 1px) no-repeat; }
+/* ┌ */ .term i.x[data-c="250c"]::before { left: calc(50% - var(--hw)); top: calc(50% - var(--hw)); right: -0.5px; bottom: -0.5px; border-left: var(--lw) solid; border-top: var(--lw) solid; }
+/* ┐ */ .term i.x[data-c="2510"]::before { left: -0.5px; right: calc(50% - var(--hw)); top: calc(50% - var(--hw)); bottom: -0.5px; border-right: var(--lw) solid; border-top: var(--lw) solid; }
+/* └ */ .term i.x[data-c="2514"]::before { left: calc(50% - var(--hw)); right: -0.5px; top: -0.5px; bottom: calc(50% - var(--hw)); border-left: var(--lw) solid; border-bottom: var(--lw) solid; }
+/* ┘ */ .term i.x[data-c="2518"]::before { left: -0.5px; right: calc(50% - var(--hw)); top: -0.5px; bottom: calc(50% - var(--hw)); border-right: var(--lw) solid; border-bottom: var(--lw) solid; }
+/* ╭ */ .term i.x[data-c="256d"]::before { left: calc(50% - var(--hw)); top: calc(50% - var(--hw)); right: -0.5px; bottom: -0.5px; border-left: var(--lw) solid; border-top: var(--lw) solid; border-top-left-radius: calc(var(--cw) * 0.6); }
+/* ╮ */ .term i.x[data-c="256e"]::before { left: -0.5px; right: calc(50% - var(--hw)); top: calc(50% - var(--hw)); bottom: -0.5px; border-right: var(--lw) solid; border-top: var(--lw) solid; border-top-right-radius: calc(var(--cw) * 0.6); }
+/* ╯ */ .term i.x[data-c="256f"]::before { left: -0.5px; right: calc(50% - var(--hw)); top: -0.5px; bottom: calc(50% - var(--hw)); border-right: var(--lw) solid; border-bottom: var(--lw) solid; border-bottom-right-radius: calc(var(--cw) * 0.6); }
+/* ╰ */ .term i.x[data-c="2570"]::before { left: calc(50% - var(--hw)); right: -0.5px; top: -0.5px; bottom: calc(50% - var(--hw)); border-left: var(--lw) solid; border-bottom: var(--lw) solid; border-bottom-left-radius: calc(var(--cw) * 0.6); }
+/* ├ */ .term i.x[data-c="251c"]::before { background: var(--g) center / var(--lw) calc(100% + 1px) no-repeat, var(--g) right center / 50% var(--lw) no-repeat; }
+/* ┤ */ .term i.x[data-c="2524"]::before { background: var(--g) center / var(--lw) calc(100% + 1px) no-repeat, var(--g) left center / 50% var(--lw) no-repeat; }
+/* ┬ */ .term i.x[data-c="252c"]::before { background: var(--g) center / calc(100% + 1px) var(--lw) no-repeat, var(--g) center bottom / var(--lw) 50% no-repeat; }
+/* ┴ */ .term i.x[data-c="2534"]::before { background: var(--g) center / calc(100% + 1px) var(--lw) no-repeat, var(--g) center top / var(--lw) 50% no-repeat; }
+/* ┼ */ .term i.x[data-c="253c"]::before { background: var(--g) center / calc(100% + 1px) var(--lw) no-repeat, var(--g) center / var(--lw) calc(100% + 1px) no-repeat; }
+
+/* ── blocks ────────────────────────────────────────────────────────────── */
+/* the half and quadrant pieces overlap their neighbours by half a pixel so
+   fractional cell positions never open a hairline between them */
+.term i.x[data-c^="258"]::before,
+.term i.x[data-c^="259"]::before { inset: -0.5px -0.4px; }
+
+/* █ */ .term i.x[data-c="2588"]::before { background: var(--c); }
+/* ▀ */ .term i.x[data-c="2580"]::before { background: var(--g) top / 100% 50% no-repeat; }
+/* ▄ */ .term i.x[data-c="2584"]::before { background: var(--g) bottom / 100% 50% no-repeat; }
+/* ▌ */ .term i.x[data-c="258c"]::before { background: var(--g) left / 50% 100% no-repeat; }
+/* ▐ */ .term i.x[data-c="2590"]::before { background: var(--g) right / 50% 100% no-repeat; }
+/* ▘ */ .term i.x[data-c="2598"]::before { background: var(--g) left top / 50% 50% no-repeat; }
+/* ▝ */ .term i.x[data-c="259d"]::before { background: var(--g) right top / 50% 50% no-repeat; }
+/* ▖ */ .term i.x[data-c="2596"]::before { background: var(--g) left bottom / 50% 50% no-repeat; }
+/* ▗ */ .term i.x[data-c="2597"]::before { background: var(--g) right bottom / 50% 50% no-repeat; }
+/* ▛ */ .term i.x[data-c="259b"]::before { background: var(--g) top / 100% 50% no-repeat, var(--g) left bottom / 50% 50% no-repeat; }
+/* ▜ */ .term i.x[data-c="259c"]::before { background: var(--g) top / 100% 50% no-repeat, var(--g) right bottom / 50% 50% no-repeat; }
+/* ▙ */ .term i.x[data-c="2599"]::before { background: var(--g) bottom / 100% 50% no-repeat, var(--g) left top / 50% 50% no-repeat; }
+/* ▟ */ .term i.x[data-c="259f"]::before { background: var(--g) bottom / 100% 50% no-repeat, var(--g) right top / 50% 50% no-repeat; }
+/* ▚ */ .term i.x[data-c="259a"]::before { background: var(--g) left top / 50% 50% no-repeat, var(--g) right bottom / 50% 50% no-repeat; }
+/* ▞ */ .term i.x[data-c="259e"]::before { background: var(--g) right top / 50% 50% no-repeat, var(--g) left bottom / 50% 50% no-repeat; }
+/* ▏ */ .term i.x[data-c="258f"]::before { background: var(--g) left / 12.5% 100% no-repeat; }
+/* ▎ */ .term i.x[data-c="258e"]::before { background: var(--g) left / 25% 100% no-repeat; }
+/* ▍ */ .term i.x[data-c="258d"]::before { background: var(--g) left / 37.5% 100% no-repeat; }
+/* ▋ */ .term i.x[data-c="258b"]::before { background: var(--g) left / 62.5% 100% no-repeat; }
+/* ▊ */ .term i.x[data-c="258a"]::before { background: var(--g) left / 75% 100% no-repeat; }
+/* ▉ */ .term i.x[data-c="2589"]::before { background: var(--g) left / 87.5% 100% no-repeat; }
+/* ▕ */ .term i.x[data-c="2595"]::before { background: var(--g) right / 12.5% 100% no-repeat; }
+/* ▔ */ .term i.x[data-c="2594"]::before { background: var(--g) top / 100% 12.5% no-repeat; }
+/* ▁ */ .term i.x[data-c="2581"]::before { background: var(--g) bottom / 100% 12.5% no-repeat; }
+/* ▂ */ .term i.x[data-c="2582"]::before { background: var(--g) bottom / 100% 25% no-repeat; }
+/* ▃ */ .term i.x[data-c="2583"]::before { background: var(--g) bottom / 100% 37.5% no-repeat; }
+/* ▅ */ .term i.x[data-c="2585"]::before { background: var(--g) bottom / 100% 62.5% no-repeat; }
+/* ▆ */ .term i.x[data-c="2586"]::before { background: var(--g) bottom / 100% 75% no-repeat; }
+/* ▇ */ .term i.x[data-c="2587"]::before { background: var(--g) bottom / 100% 87.5% no-repeat; }
+/* ░ */ .term i.x[data-c="2591"]::before { background: var(--c); opacity: 0.25; }
+/* ▒ */ .term i.x[data-c="2592"]::before { background: var(--c); opacity: 0.5; }
+/* ▓ */ .term i.x[data-c="2593"]::before { background: var(--c); opacity: 0.75; }
+
+/* the hardware cursor, which tmux reports separately from the cells */
+.term .cursor {
+	position: absolute;
+	width: 2px;
+	height: var(--lh);
+	background: #dbe2f5;
+	display: none;
+}

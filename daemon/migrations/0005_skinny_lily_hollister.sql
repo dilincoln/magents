@@ -1,0 +1,1 @@
+ALTER TABLE `groups` ADD `hibernates` integer DEFAULT false NOT NULL;

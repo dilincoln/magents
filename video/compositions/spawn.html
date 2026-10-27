@@ -1,0 +1,35 @@
+<template>
+	<!-- bars 34–40: a new session — provider, model, a skill, a prompt -->
+	<div data-hf-id="hf-xqsl" data-composition-id="spawn" data-width="1920" data-height="1080" data-duration="10.909">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-d6vr" id="h-spawn" class="host clip" data-composition-id="h-spawn" data-no-timeline
+					data-start="0" data-duration="10.909" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-lfo9" id="h-lens-spawn" class="host clip" data-composition-id="h-lens-spawn" data-no-timeline
+				data-start="0" data-duration="10.909" data-playback-start="0.908"></div></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-x2u1" class="kicker">04 · Spawn</div>
+			<h2 data-hf-id="hf-5sw4">Spawn in any project.</h2>
+			<p data-hf-id="hf-gw1q">Pick the provider, the model and the effort. The project's skills are one <code data-hf-id="hf-i3y1">/</code> away.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-n46h">⌃n</kbd><span data-hf-id="hf-oqkt">new</span><kbd data-hf-id="hf-pi0n">⌃p</kbd><span data-hf-id="hf-xyp4">provider</span><kbd data-hf-id="hf-p3pm">⌃s</kbd><span data-hf-id="hf-b7mb">send</span></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.feature("spawn", Film.bar(34), { take: "spawn" });
+				Film.screen(s, "h-lens-spawn", "spawn");
+				// while the spawn panel is up: its footer lists the model key
+				Film.lens(s, { x: 380, y: 270, w: 920, h: 400 }, 1.15, [760, 300], Film.onScreen(s, "h-lens-spawn", "⌃o model"));
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

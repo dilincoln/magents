@@ -1,0 +1,35 @@
+<template>
+	<!-- bars 40–46: moving a session into a hibernating group -->
+	<div data-hf-id="hf-hvf1" data-composition-id="groups" data-width="1920" data-height="1080" data-duration="10.908">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-c14a" id="h-groups" class="host clip" data-composition-id="h-groups" data-no-timeline
+					data-start="0" data-duration="10.908" data-playback-start="0.908"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-tbam" id="h-lens-groups" class="host clip" data-composition-id="h-lens-groups" data-no-timeline
+				data-start="0" data-duration="10.908" data-playback-start="0.908"></div></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-844b" class="kicker">05 · Groups</div>
+			<h2 data-hf-id="hf-jz2b">Groups you define.</h2>
+			<p data-hf-id="hf-mj2k">Your own buckets per project. Drop finished work in a hibernating group and its agent stops — conversation kept, one key to wake it.</p>
+			<div data-hf-id="hf-rgbw" class="keys"><kbd data-hf-id="hf-ici5">⌃b</kbd><span data-hf-id="hf-mh4w">move</span><kbd data-hf-id="hf-opel">⌃r</kbd><span data-hf-id="hf-nqeu">resume</span></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.feature("groups", Film.bar(40), { take: "move" });
+				Film.screen(s, "h-lens-groups", "move");
+				// exactly while the move-session popup is open
+				Film.lens(s, { x: 520, y: 280, w: 640, h: 380 }, 1.35, [900, 330], Film.onScreen(s, "h-lens-groups", "move session"));
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

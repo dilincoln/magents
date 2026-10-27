@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=1920, height=1080" />
+		<title>magents — presentation</title>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+		<link rel="stylesheet" href="lib/term.css" />
+		<link rel="stylesheet" href="lib/film.css" />
+		<script src="lib/term.js"></script>
+		<script src="lib/wordmark.js"></script>
+		<script src="lib/film.js"></script>
+		<!-- the recorded screens of the real TUI (capture/record.ts) -->
+		<script src="takes/overview.js"></script>
+		<script src="takes/attach.js"></script>
+		<script src="takes/attention.js"></script>
+		<script src="takes/spawn.js"></script>
+		<script src="takes/move.js"></script>
+		<script src="takes/quit.js"></script>
+		<script src="takes/cli-tui.js"></script>
+		<script src="takes/cli-shell.js"></script>
+		<script src="takes/search.js"></script>
+		<script src="takes/input.js"></script>
+	</head>
+	<body>
+		<!--
+			Timing: the soundtrack (soundtrack.py) is 132 bpm with its first beat at
+			1.8325 s, so bar n starts at 1.8325 + 1.81808·n. Every scene starts on a
+			bar; the chorus phrase restarts every 8 bars from bar 12:
+			  intro 0–12 · drop 12 · roster 14 · attach 20 · attention 28 · spawn 34
+			  groups 40 · daemon 46 · cli 52 · search 62 · keyboard & mouse 68
+			  recap 76 · logo 80 (the track's last hit) · end 151.25
+			Each scene is a file in compositions/, and its script names the same
+			start, through the grid in lib/film.js.
+		-->
+		<div data-hf-id="hf-owri"
+			id="root"
+			data-composition-id="main"
+			data-start="0"
+			data-duration="151.25"
+			data-width="1920"
+			data-height="1080"
+		>
+			<audio data-hf-id="hf-f21c"
+				id="music"
+				src="assets/soundtrack.mp3"
+				data-start="0"
+				data-duration="151.25"
+				data-track-index="0"
+				data-timeline-role="music"
+				data-volume="1"
+			></audio>
+
+			<div data-hf-id="hf-mwvj" id="backdrop">
+				<div data-hf-id="hf-zx1w" class="dots"></div>
+				<div data-hf-id="hf-n0p9" class="glow g1"></div>
+				<div data-hf-id="hf-qyta" class="glow g2"></div>
+				<div data-hf-id="hf-q7bi" class="vignette"></div>
+			</div>
+
+			<!-- one agent, then too many -->
+			<div data-hf-id="hf-q1gc" id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html"
+				data-start="0" data-duration="23.9" data-track-index="1" data-width="1920" data-height="1080"></div>
+			<!-- the drop: the wordmark -->
+			<div data-hf-id="hf-g0b3" id="drop" data-composition-id="drop" data-composition-src="compositions/drop.html"
+				data-start="23.5" data-duration="4.3" data-track-index="2" data-width="1920" data-height="1080"></div>
+
+			<!-- the product, one feature a scene -->
+			<div data-hf-id="hf-dgeu" id="roster" data-composition-id="roster" data-composition-src="compositions/roster.html"
+				data-start="26.886" data-duration="11.308" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-n2y1" id="attach" data-composition-id="attach" data-composition-src="compositions/attach.html"
+				data-start="38.194" data-duration="14.545" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-n9xm" id="attention" data-composition-id="attention" data-composition-src="compositions/attention.html"
+				data-start="52.739" data-duration="10.908" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-jvic" id="spawn" data-composition-id="spawn" data-composition-src="compositions/spawn.html"
+				data-start="63.647" data-duration="10.909" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-0m23" id="groups" data-composition-id="groups" data-composition-src="compositions/groups.html"
+				data-start="74.556" data-duration="10.908" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-i3kc" id="daemon" data-composition-id="daemon" data-composition-src="compositions/daemon.html"
+				data-start="85.464" data-duration="10.909" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-o23q" id="cli" data-composition-id="cli" data-composition-src="compositions/cli.html"
+				data-start="96.373" data-duration="18.18" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-p0f4" id="search" data-composition-id="search" data-composition-src="compositions/search.html"
+				data-start="114.553" data-duration="10.909" data-track-index="3" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-uu5j" id="input" data-composition-id="input" data-composition-src="compositions/input.html"
+				data-start="125.462" data-duration="14.545" data-track-index="3" data-width="1920" data-height="1080"></div>
+
+			<!-- eight chips, then the logo on the track's last hit -->
+			<div data-hf-id="hf-pojx" id="recap" data-composition-id="recap" data-composition-src="compositions/recap.html"
+				data-start="139.8" data-duration="7.7" data-track-index="4" data-width="1920" data-height="1080"></div>
+			<div data-hf-id="hf-458k" id="outro" data-composition-id="outro" data-composition-src="compositions/outro.html"
+				data-start="147.1" data-duration="4.15" data-track-index="5" data-width="1920" data-height="1080"></div>
+
+			<div data-hf-id="hf-hmg5" id="flash"></div>
+		</div>
+
+		<script>
+			// The root's own motion: the backdrop's drift, and the flash on the hits
+			// that belong to no one scene — the drop, the chorus phrase restarting
+			// under a cut (every 8 bars from 12), and the logo.
+			(function () {
+				const { bar, END } = Film;
+				const tl = gsap.timeline({ paused: true, defaults: { immediateRender: false } });
+				tl.fromTo("#backdrop .g1", { x: 0, y: 0 }, { x: 260, y: 180, duration: END, ease: "sine.inOut" }, 0);
+				tl.fromTo("#backdrop .g2", { x: 0, y: 0 }, { x: -240, y: -160, duration: END, ease: "sine.inOut" }, 0);
+				tl.fromTo("#backdrop .dots", { x: 0, y: 0 }, { x: -32, y: -96, duration: END, ease: "none" }, 0);
+				tl.fromTo("#backdrop", { opacity: 0 }, { opacity: 1, duration: 1.4, ease: "power2.out" }, 0);
+				tl.fromTo("#flash", { opacity: 0.95 }, { opacity: 0, duration: 0.7, ease: "power2.out" }, bar(12));
+				for (const n of [20, 28, 52, 68]) {
+					tl.fromTo("#flash", { opacity: 0.4 }, { opacity: 0, duration: 0.55, ease: "power2.out" }, bar(n));
+				}
+				tl.fromTo("#flash", { opacity: 0.9 }, { opacity: 0, duration: 0.9, ease: "power2.out" }, bar(80));
+				tl.to("#backdrop", { opacity: 0, duration: 1.0, ease: "power2.in" }, END - 1.0);
+				tl.set({}, {}, END);
+				window.__timelines = window.__timelines || {};
+				window.__timelines["main"] = tl;
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,6 @@
+# The shell the recordings type into: the mock world's environment and a
+# prompt that looks like somebody's ordinary machine.
+source /wsl/magents/video/capture/env.sh
+cd /home/demo/code/atlas-api
+PS1='\[\e[38;2;74;222;128m\]demo@devbox\[\e[0m\] \[\e[38;2;34;211;238m\]\w\[\e[0m\] \[\e[38;2;167;139;250m\]❯\[\e[0m\] '
+HISTFILE=/dev/null

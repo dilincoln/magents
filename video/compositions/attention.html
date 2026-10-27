@@ -1,0 +1,85 @@
+<template>
+	<!-- bars 28–34: rows light up as agents finish or ask -->
+	<div data-hf-id="hf-afrl" data-composition-id="attention" data-width="1920" data-height="1080" data-duration="10.908">
+		<div data-hf-id="hf-d1uq" class="halo"></div>
+		<div data-hf-id="hf-ix6b" class="window main">
+			<div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><span data-hf-id="hf-sibq">magents — demo@devbox: ~/code/atlas-api</span></div>
+			<div data-hf-id="hf-2t3w" class="body">
+				<div data-hf-id="hf-snb5" id="h-attention" class="host clip" data-composition-id="h-attention" data-no-timeline
+					data-start="0" data-duration="10.908" data-playback-start="0.985"></div>
+				<div data-hf-id="hf-r3h8" class="glint"></div>
+			</div>
+		</div>
+		<!-- a magnified copy of what the window already shows, drawn over it on
+		     purpose while the window is out of focus: the audit reads the window -->
+		<div data-hf-id="hf-3ecl" class="lens" data-layout-ignore>
+			<div data-hf-id="hf-eldc" class="lens-in"><div data-hf-id="hf-ffi5" id="h-lens-attention" class="host clip" data-composition-id="h-lens-attention" data-no-timeline
+				data-start="0" data-duration="10.908" data-playback-start="0.985"></div></div>
+			<div data-hf-id="hf-e1l5" class="rings"></div>
+		</div>
+		<div data-hf-id="hf-2mgg" class="cap">
+			<div data-hf-id="hf-3vhl" class="kicker">03 · Attention</div>
+			<h2 data-hf-id="hf-emkk">It tells you when it needs you.</h2>
+			<p data-hf-id="hf-ustq">Finished a turn, or waiting on a permission? Its row pulses and the bell rings once — through the providers' own hooks, even off screen.</p>
+		</div>
+		<script>
+			(function () {
+				const { P, T0, plain } = Film;
+				const s = Film.feature("attention", Film.bar(28), { take: "attention" });
+				const { tl } = s;
+				Film.screen(s, "h-lens-attention", "attention");
+				const at = [1330, 210];
+				const z = 1.15;
+				const lens = Film.lens(s, { x: 0, y: 100, w: 360, h: 600 }, z, at, [s.bar(28) + 0.6, s.bar(34)]);
+
+				// rings on the rows that light up, on the beat after each one does
+				const attention = s.hosts["h-attention"];
+				const ringsEl = lens.querySelector(".rings");
+				const lights = [
+					["fix flaky", "finished"],
+					["JIRA-1979", "finished"],
+					["review the API", "needs permission"],
+				];
+				for (const [title, label] of lights) {
+					const takeT = litAt(attention.take, title);
+					const film = s.start + attention.clock(takeT);
+					const onBeat = s.beat(Math.ceil((film - T0) / P - 0.05));
+					const row = TermPlayer.rowOf(attention.take, title, takeT);
+					const ring = document.createElement("div");
+					ring.className = "ring";
+					Object.assign(ring.style, {
+						left: `${6 * z}px`,
+						top: `${(row * 25 - 100) * z - 3}px`,
+						width: `${348 * z}px`,
+						height: `${25 * z + 6}px`,
+					});
+					ringsEl.appendChild(ring);
+					tl.fromTo(ring, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, onBeat);
+					tl.to(ring, { opacity: 0.35, duration: 0.8 }, onBeat + 1.6);
+					const tag = document.createElement("div");
+					tag.className = "tag";
+					// drawn over the window on purpose, while it is out of focus
+					tag.setAttribute("data-layout-allow-overlap", "");
+					tag.textContent = label;
+					s.root.appendChild(tag);
+					tl.set(tag, { x: at[0] - 16, y: at[1] + (row * 25 - 100) * z + 12 * z, xPercent: -100, yPercent: -50 }, 0);
+					tl.fromTo(tag, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, onBeat);
+					tl.to(tag, { opacity: 0, duration: 0.25 }, s.bar(34) - 0.3);
+				}
+				function litAt(take, title) {
+					// the first frame where the box behind the row's title is neither the
+					// plain panel colour nor the cursor's: that is the attention wash
+					for (const f of take.frames) {
+						const html = f.rows.map((id) => take.rowsDict[id]).find((h) => plain(h).slice(0, 30).includes(title));
+						if (!html) continue;
+						const before = html.slice(0, html.indexOf(title.slice(0, 4)));
+						const bg = [...before.matchAll(/background:(#[0-9a-f]{6})/g)].pop()?.[1];
+						if (bg && bg !== "#0d1020" && bg !== "#2f3d6b") return f.t;
+					}
+					throw new Error(`${title} never lights up`);
+				}
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

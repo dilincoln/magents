@@ -1,0 +1,116 @@
+<template>
+	<!-- bars 0–12: one agent window, then a pile of them -->
+	<div data-hf-id="hf-r0un" data-composition-id="intro" data-width="1920" data-height="1080" data-duration="23.9">
+		<!-- a pile of small windows: texture, not text to read, and overlapping on purpose -->
+		<div data-hf-id="hf-69ok" id="minis" data-layout-ignore></div>
+		<div data-hf-id="hf-tc90" class="intro-line" id="l1">Running one coding agent is <em data-hf-id="hf-kxd9">easy.</em></div>
+		<div data-hf-id="hf-4u8r" class="intro-line" id="l2">Running a whole fleet of them is <em data-hf-id="hf-43ot">chaos.</em></div>
+		<div data-hf-id="hf-ou1c" class="intro-line" id="l3">A tab per agent. Close the tab, <em data-hf-id="hf-8vny">lose the agent.</em></div>
+		<div data-hf-id="hf-jb36" class="intro-line" id="l4">Finished, or still working? <em data-hf-id="hf-opo8">You can't tell.</em></div>
+		<div data-hf-id="hf-bw61" class="intro-line" id="l5">So we built <em data-hf-id="hf-1ihv">one terminal</em> for all of them.</div>
+		<script>
+			(function () {
+				const { BAR, beat, bar } = Film;
+				const s = Film.scene("intro", 0);
+				const { tl } = s;
+
+				const overview = TAKES.overview;
+				const minis = [
+					{ find: "JIRA-2041 rate-limit", title: "claude — atlas-api", slot: [330, 250, -3] },
+					{ find: "migrate users table", title: "codex — atlas-api", slot: [800, 190, 2] },
+					{ find: "review the API surface", title: "claude — atlas-api", slot: [1270, 240, -2] },
+					{ find: "add OpenAPI docs", title: "claude — atlas-api", slot: [1640, 330, 3] },
+					{ find: "fix flaky checkout", title: "codex — orbit-web", slot: [520, 520, 2] },
+					{ find: "JIRA-1979 reconcile", title: "claude — ledger-core", slot: [1000, 560, -2] },
+					{ find: "terraform plan", title: "codex — infra", slot: [1450, 590, 3] },
+					{ find: "dark mode for settings", title: "claude — orbit-web", slot: [260, 640, -4] },
+				];
+				const minisEl = s.q("#minis");
+				minis.forEach((m) => {
+					const box = document.createElement("div");
+					box.className = "mini";
+					box.innerHTML = `<div class="bar">${m.title}<span class="close">✕</span></div><div class="crop"><div></div></div><div class="ask">?</div>`;
+					minisEl.appendChild(box);
+					const t = TermPlayer.find(overview, m.find, 0, 0);
+					TermPlayer(box.querySelector(".crop > div"), overview).show((t ?? 0) + 0.6);
+					m.el = box;
+				});
+				// a window's centre is its position; scale is applied around it
+				const place = (x, y, scale, rotation = 0) => ({ x: x - 660, y: y - 454, scale, rotation });
+				const slot = (m, scale = 0.34) => place(m.slot[0], m.slot[1], scale, m.slot[2]);
+
+				// bar 0: one window, in the middle
+				const first = minis[0];
+				tl.fromTo(first.el, { opacity: 0, ...place(960, 460, 0.5) }, { opacity: 1, ...place(960, 420, 0.52), duration: 0.8, ease: "power3.out" }, Math.max(0, bar(0) - 0.15));
+				// bar 2: it gives up the middle, and the rest arrive one a beat
+				tl.to(first.el, { ...slot(first), duration: 0.6, ease: "power3.inOut" }, bar(2) - 0.1);
+				minis.slice(1).forEach((m, i) => {
+					tl.fromTo(
+						m.el,
+						{ opacity: 0, ...place(m.slot[0], m.slot[1] + 60, 0.2, m.slot[2] * 3) },
+						{ opacity: 1, ...slot(m), duration: 0.5, ease: "back.out(1.5)" },
+						beat(9 + i),
+					);
+				});
+				// then the whole pile drifts, slowly, so it never sits still
+				minis.forEach((m, i) => {
+					const dy = i % 2 ? -14 : 14;
+					tl.to(m.el, { y: slot(m).y + dy, duration: bar(11) - bar(4), ease: "sine.inOut" }, bar(4));
+				});
+
+				// bars 5–8: "close the tab, lose the agent" — one window is marked a
+				// whole bar before it goes, so the eye is on it when it does
+				const victim = minis[5];
+				const ghost = document.createElement("div");
+				ghost.className = "ghost";
+				ghost.textContent = "agent lost";
+				minisEl.appendChild(ghost);
+				tl.set(ghost, slot(victim), 0);
+				tl.fromTo(
+					victim.el,
+					{ borderColor: "#2a3360", boxShadow: "0 40px 100px rgba(0,0,0,0.7), 0 0 0 0px rgba(248,113,113,0), 0 0 0px rgba(248,113,113,0)" },
+					{
+						borderColor: "#f87171",
+						boxShadow: "0 40px 100px rgba(0,0,0,0.7), 0 0 0 8px rgba(248,113,113,0.35), 0 0 90px rgba(248,113,113,0.5)",
+						duration: 0.4,
+						ease: "power2.out",
+					},
+					bar(6),
+				);
+				tl.fromTo(victim.el.querySelector(".close"), { opacity: 0 }, { opacity: 1, duration: 0.2 }, bar(6));
+				tl.to(victim.el, { scale: 0.05, opacity: 0, duration: 0.35, ease: "power3.in" }, bar(7) - 0.35);
+				tl.fromTo(ghost, { opacity: 0, scale: 0.36 }, { opacity: 1, scale: 0.34, duration: 0.3, ease: "power2.out" }, bar(7));
+				tl.to(ghost, { opacity: 0, duration: 0.6, ease: "power2.in" }, bar(8) - 0.3);
+
+				// bars 8–10: "finished or still working?" — a question mark lands on
+				// every window, one a beat
+				const survivors = minis.filter((m) => m !== victim);
+				survivors.forEach((m, i) => {
+					tl.fromTo(m.el.querySelector(".ask"), { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, beat(32 + i));
+				});
+
+				// bars 11–12: the build — every window is drawn into the middle, in a
+				// smooth stagger across the bar, and gone by the drop
+				survivors.forEach((m, i) => {
+					tl.to(m.el, { ...place(960, 470, 0.03, 0), opacity: 0, duration: 1.1, ease: "power3.in" }, bar(11) + (i * (BAR - 1.1)) / survivors.length);
+				});
+
+				// the five lines
+				const lines = [
+					["#l1", bar(0), bar(2)],
+					["#l2", bar(2), bar(5)],
+					["#l3", bar(5), bar(8)],
+					["#l4", bar(8), bar(10)],
+					["#l5", bar(10), bar(12) - 0.2],
+				];
+				for (const [sel, from, to] of lines) {
+					tl.fromTo(s.q(sel), { opacity: 0, y: 34, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, from);
+					tl.to(s.q(sel), { opacity: 0, y: -24, filter: "blur(6px)", duration: 0.3, ease: "power2.in" }, to - 0.3);
+				}
+				tl.fromTo(s.q("#l5"), { scale: 1 }, { scale: 1.08, duration: BAR, ease: "power1.in" }, bar(11));
+
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

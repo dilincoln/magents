@@ -1,0 +1,1 @@
+ALTER TABLE `sessions` ADD `requires_attention` integer DEFAULT false NOT NULL;

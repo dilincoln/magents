@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Every take, from a fresh mock world, in the order the video tells it — each
+# take starts from the state the previous one left.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+./reset
+./t send-keys -t main:tui "clear; magents" Enter
+# long enough for the short scenarios to finish and the TUI to settle
+sleep 14
+
+for take in overview attach attention spawn move search quit cli input; do
+	bun record.ts "$take"
+	sleep 1
+done

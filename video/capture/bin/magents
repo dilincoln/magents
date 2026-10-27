@@ -1,0 +1,22 @@
+#!/bin/sh
+# The TUI, as the installed `magents` binary would be — run from a copy of
+# this repository's source with one change: the veil over an unattached
+# session's pane ("⏎ or → to attach", and the dimming under it) is not drawn,
+# so the recorded screens show the agent's own terminal clean. The app's own
+# source is not touched; the copy lives in the scratch tree.
+set -e
+repo="$(cd "$(dirname "$0")/../../.." && pwd)"
+
+rm -rf /tmp/mgv-scratch/app
+mkdir -p /tmp/mgv-scratch/app
+cp -r "$repo/src" "$repo/client" "$repo/daemon" "$repo/cli" "$repo/package.json" "$repo/tsconfig.json" /tmp/mgv-scratch/app/
+ln -s "$(readlink -f "$repo/node_modules")" /tmp/mgv-scratch/app/node_modules
+
+# the one line that mounts the veil, replaced by nothing — fail loudly if the
+# source no longer has it, rather than record the veil after all
+grep -q '<Veil onAttach={focusTerminal} />' /tmp/mgv-scratch/app/src/components/detail-pane.tsx
+sed -i 's#{focus === "terminal" ? null : <Veil onAttach={focusTerminal} />}#{null}#' \
+	/tmp/mgv-scratch/app/src/components/detail-pane.tsx
+! grep -q '<Veil onAttach' /tmp/mgv-scratch/app/src/components/detail-pane.tsx
+
+exec bun run /tmp/mgv-scratch/app/src/index.tsx "$@"

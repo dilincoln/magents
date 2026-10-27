@@ -1,0 +1,31 @@
+<template>
+	<!-- bars 76–80: eight chips land on eight beats and hold for two bars -->
+	<div data-hf-id="hf-6j30" data-composition-id="recap" data-width="1920" data-height="1080" data-duration="7.7">
+		<div data-hf-id="hf-exrd" class="chips">
+			<div data-hf-id="hf-p9q7" class="chip"><b data-hf-id="hf-0x09">◆</b>Claude Code + Codex</div>
+			<div data-hf-id="hf-8cmw" class="chip"><b data-hf-id="hf-o2jx">◆</b>Every repo, one roster</div>
+			<div data-hf-id="hf-omi9" class="chip"><b data-hf-id="hf-p9h0">◆</b>Agents outlive the UI</div>
+			<div data-hf-id="hf-c4gt" class="chip"><b data-hf-id="hf-ov5z">◆</b>Pings you when it's done</div>
+			<div data-hf-id="hf-6hxp" class="chip"><b data-hf-id="hf-q232">◆</b>Groups that hibernate</div>
+			<div data-hf-id="hf-zeky" class="chip"><b data-hf-id="hf-pns1">◆</b>Skills one <code data-hf-id="hf-i3y1">/</code> away</div>
+			<div data-hf-id="hf-1tn1" class="chip"><b data-hf-id="hf-qup4">◆</b>Import any session</div>
+			<div data-hf-id="hf-m0f9" class="chip"><b data-hf-id="hf-qge3">◆</b>A CLI with <code data-hf-id="hf-frb8">--json</code></div>
+		</div>
+		<script>
+			(function () {
+				const s = Film.scene("recap", 139.8);
+				const { tl } = s;
+				const chips = s.qa(".chip");
+				chips.forEach((chip, i) => {
+					tl.fromTo(chip, { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, s.beat(304 + i) - 0.04);
+				});
+				// every chip lights on the downbeats while they hold
+				for (const n of [78, 79]) {
+					tl.fromTo(chips, { borderColor: "rgba(34, 211, 238, 0.7)" }, { borderColor: "#262f55", duration: 0.6, ease: "power2.out", stagger: 0.04 }, s.bar(n));
+				}
+				tl.to(chips, { opacity: 0, scale: 0.94, duration: 0.25, stagger: 0.015, ease: "power2.in" }, s.bar(80) - 0.3);
+				s.done();
+			})();
+		</script>
+	</div>
+</template>

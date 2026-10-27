@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# shot <take> <seconds> <out.png> — screenshot one frame of a take at 1:1
+here="$(cd "$(dirname "$0")" && pwd)"
+CHROME=/home/diego/.cache/hyperframes/chrome/chrome-headless-shell/linux-152.0.7977.30/chrome-headless-shell-linux64/chrome-headless-shell
+# the page lives outside the project, so the editor never mistakes it for a
+# composition; its <base> points back here for the renderer and the takes
+mkdir -p /tmp/mgv-review
+sed "s#@CAPTURE@#file://$here#" "$here/preview.html.in" > /tmp/mgv-review/preview.html
+exec "$CHROME" --headless --disable-gpu --allow-file-access-from-files --hide-scrollbars \
+	--window-size=1680,950 --virtual-time-budget=2000 --screenshot="$3" \
+	"file:///tmp/mgv-review/preview.html?take=$1&t=$2" 2>/dev/null

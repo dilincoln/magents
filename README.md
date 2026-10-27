@@ -8,6 +8,16 @@ repositories from one roster, leave them working in the background, and find out
 the moment one of them finishes or needs an answer — without a tab per agent and
 without wandering back to check.
 
+It is three pieces: a small **daemon** that owns every agent's terminal and keeps
+it alive, a **TUI** that shows all of them in one window and lets you type straight
+into any of them, and a **CLI** that does everything the TUI does from a shell.
+Quit the TUI and nothing stops; open it again and every session is where you left it.
+
+https://github.com/user-attachments/assets/b784ffd9-0aad-493c-a3c9-038d7333f879
+
+<sub>Every terminal in the video is the real TUI, recorded from this repository —
+see [`video/`](video/README.md).</sub>
+
 ```
   MAGENTS   │ agent control plane                       ~/code/atlas-api
             │ 5 sessions · 2 projects     rename session · hibernate | ? keys
